@@ -27,3 +27,7 @@ set hlsearch
 set incsearch
 set ignorecase
 
+" Keyboard shortcuts
+map <F12> :set lines=80 columns=192<CR>
+map <S-F12> :set lines=40 columns=96<CR>
+
