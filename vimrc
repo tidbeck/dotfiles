@@ -3,6 +3,7 @@ colorscheme molokai
 set ruler
 
 " Swap files
+set backupdir=$HOME/.vim/swpfiles//
 set directory=$HOME/.vim/swpfiles//
 
 " Undo
