@@ -24,7 +24,20 @@ require('packer').startup(function()
 
     -- Completion
     use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/completion-nvim'
+    use {
+        "hrsh7th/nvim-cmp",
+        requires = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-calc',
+            'f3fora/cmp-spell',
+            'hrsh7th/cmp-emoji',
+            'onsails/lspkind-nvim'
+
+        }
+    }
 
     -- Icons
     use {
