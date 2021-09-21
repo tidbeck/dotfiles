@@ -23,7 +23,6 @@ require('packer').startup(function()
     use 'tpope/vim-fugitive'
 
     -- Completion
-    use 'neovim/nvim-lsp'
     use 'neovim/nvim-lspconfig'
     use 'nvim-lua/completion-nvim'
 
