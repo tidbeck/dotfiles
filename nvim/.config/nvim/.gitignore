@@ -1,0 +1,4 @@
+undodir/*
+swpfiles/*
+.netrwhist
+packer_compiled.lua
