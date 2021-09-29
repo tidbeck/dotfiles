@@ -5,7 +5,7 @@ require('lsp')
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.ruler = true
-vim.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.inccommand = 'nosplit'
 
 vim.opt.tabstop = 4
