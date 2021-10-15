@@ -73,7 +73,7 @@ vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', {no
 
 -- Completion
 vim.opt.completeopt = 'menuone,noinsert,noselect'
-vim.opt.shortmess = 'c' -- Avoid showing message extra message when using completion
+vim.opt.shortmess:append('c') -- Avoid showing message extra message when using completion
 vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
 vim.g.completion_matching_ignore_case = false
 vim.g.completion_trigger_keyword_length = 2
