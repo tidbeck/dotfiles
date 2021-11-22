@@ -141,5 +141,8 @@ require('packer').startup(function()
         requires = 'nvim-treesitter/nvim-treesitter',
     }
 
+    -- Github copilot
+    use 'github/copilot.vim'
+
 end)
 
