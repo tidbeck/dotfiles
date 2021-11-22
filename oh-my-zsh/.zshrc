@@ -81,6 +81,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export EDITOR=nvim
+export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -107,7 +108,7 @@ export EDITOR=nvim
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias zshrc="nvim ~/.zshrc"
 alias vim="nvim"
-alias vimrc="nvim ~/.config/nvim/init.vim"
+alias vimrc="nvim ~/.config/nvim/init.lua"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
