@@ -56,7 +56,7 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':bprevious', {noremap = true, silent 
 
 vim.api.nvim_set_keymap('n', '<CR>', ':nohlsearch<CR><CR>', {noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<leader>p', ':execute %!python -m json.tool<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>p', ':%!python -m json.tool<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t', ':TroubleToggle<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<C-E>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>f', ':Files<CR>', {noremap = true, silent = true})
