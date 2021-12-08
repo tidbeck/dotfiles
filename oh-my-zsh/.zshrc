@@ -5,9 +5,6 @@ export PATH=/usr/local/opt/openjdk/bin:$HOME/go/bin:$HOME/development/flutter/bi
 # C Headers
 #export CPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include
 
-# Setup rbenv
-eval "$(rbenv init -)"
-
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/tidbeck/.oh-my-zsh"
 
