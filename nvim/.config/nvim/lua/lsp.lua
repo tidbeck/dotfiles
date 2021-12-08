@@ -1,4 +1,5 @@
 local nvim_lsp = require('lspconfig')
+local lsp_installer = require("nvim-lsp-installer")
 
 function execute(cmd)
     local file = io.popen(cmd, 'r')
@@ -9,6 +10,11 @@ end
 
 local iPhoneSimulatorSDKPath = execute('xcrun --sdk iphonesimulator --show-sdk-path'):gsub('\n', '')
 local iPhoneSimulatorSDKVersion = execute('xcrun --sdk iphonesimulator --show-sdk-version'):gsub('\n', '')
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+    server:setup(opts)
+end)
 
 local cmp = require('cmp')
 cmp.setup {

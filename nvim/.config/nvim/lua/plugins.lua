@@ -23,7 +23,11 @@ require('packer').startup(function()
     use 'tpope/vim-fugitive'
 
     -- Completion
-    use 'neovim/nvim-lspconfig'
+    use {
+        'neovim/nvim-lspconfig',
+        'williamboman/nvim-lsp-installer',
+    }
+
     use {
         "hrsh7th/nvim-cmp",
         requires = {
