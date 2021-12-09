@@ -1,7 +1,273 @@
-require('plugins')
-require('lsp')
+---------------------------------------
+-- Load plugins
+---------------------------------------
+-- Bootstrap packer
+local fn = vim.fn
+local packer_install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(packer_install_path)) > 0 then
+  fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_install_path})
+  vim.cmd 'packadd packer.nvim'
+end
 
--- General options
+vim.cmd [[packadd packer.nvim]]
+
+require('packer').startup(function()
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
+
+    -- Themes
+    use { 'arcticicestudio/nord-vim' }
+
+    -- Files
+    use { 'junegunn/fzf', run = ':call fzf#install()' }
+    use 'junegunn/fzf.vim'
+
+    -- Surround
+    use 'tpope/vim-surround'
+
+    -- Git
+    use 'tpope/vim-fugitive'
+
+    -- Completion
+    use {
+        'neovim/nvim-lspconfig',
+        'williamboman/nvim-lsp-installer',
+    }
+
+    use {
+        "hrsh7th/nvim-cmp",
+        requires = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-calc',
+            'f3fora/cmp-spell',
+            'hrsh7th/cmp-emoji',
+            'onsails/lspkind-nvim'
+
+        }
+    }
+
+    -- Icons
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function()
+            require'nvim-web-devicons'.setup()
+            require'nvim-web-devicons'.get_icons()
+        end
+    }
+
+    -- Status line
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        config = function()
+            require'lualine'.setup {
+                options = {
+                    theme = 'tokyonight',
+                },
+                sections = {
+                    -- lualine_b = {
+                    -- {
+                    -- 'diagnostic',
+                    -- source = {
+                    -- 'nvim_lsp'
+                    -- }
+                    -- }
+                    -- },
+                    lualine_c = {
+                        {
+                            'filename',
+                            file_status = true,
+                            path = 1
+                        }
+                    }
+                },
+                extensions = {
+                    'fugitive'
+                }
+            }
+        end
+    }
+
+    -- File navigator
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require'nvim-tree'.setup()
+        end
+    }
+
+    -- Colorscheme
+    use 'folke/tokyonight.nvim'
+
+    -- Pretty LSP diagnostics
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require'trouble'.setup()
+        end
+    }
+    use {
+        'glepnir/lspsaga.nvim',
+        config = function()
+            require'lspsaga'.init_lsp_saga {
+                -- icons / text used for a diagnostic
+                error_sign = "",
+                warn_sign = "",
+                hint_sign = "",
+                infor_sign = "",
+            }
+        end
+    }
+
+    -- Syntax
+    use 'keith/swift.vim'
+    use 'udalov/kotlin-vim'
+    use 'towolf/vim-helm'
+    use { 'sebdah/vim-delve', { 'fatih/vim-go', run = ':GoUpdateBinaries' } }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                ensure_installed = "maintained",
+                highlight = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true
+                }
+            }
+        end
+    }
+
+    use {
+        'nvim-treesitter/playground',
+        requires = 'nvim-treesitter/nvim-treesitter',
+    }
+
+    -- Github copilot
+    use 'github/copilot.vim'
+
+end)
+
+---------------------------------------
+-- Setup LSP
+---------------------------------------
+local nvim_lsp = require('lspconfig')
+local lsp_installer = require("nvim-lsp-installer")
+
+function execute(cmd)
+    local file = io.popen(cmd, 'r')
+    local output = file:read('*all')
+    file:close()
+    return output
+end
+
+local iPhoneSimulatorSDKPath = execute('xcrun --sdk iphonesimulator --show-sdk-path'):gsub('\n', '')
+local iPhoneSimulatorSDKVersion = execute('xcrun --sdk iphonesimulator --show-sdk-version'):gsub('\n', '')
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
+    server:setup(opts)
+end)
+
+local cmp = require('cmp')
+cmp.setup {
+
+    formatting = {
+        format = function(entry, vim_item)
+            -- fancy icons and a name of kind
+            vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
+                                " " .. vim_item.kind
+            -- set a name for each source
+            vim_item.menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                ultisnips = "[UltiSnips]",
+                nvim_lua = "[Lua]",
+                cmp_tabnine = "[TabNine]",
+                look = "[Look]",
+                path = "[Path]",
+                spell = "[Spell]",
+                calc = "[Calc]",
+                emoji = "[Emoji]"
+            })[entry.source.name]
+            return vim_item
+        end
+    },
+    mapping = {
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true
+        })
+    },
+    sources = {
+        {name = 'buffer'},
+        {name = 'nvim_lsp'},
+        {name = "nvim_lua"},
+        {name = "path"},
+        {name = "calc"},
+        {name = "spell"},
+        {name = "emoji"}
+    }
+}
+
+-- Swift
+nvim_lsp.sourcekit.setup {
+    cmd = {
+        'xcrun',
+        'sourcekit-lsp',
+        '-Xswiftc', '-sdk',
+        '-Xswiftc', iPhoneSimulatorSDKPath,
+        '-Xswiftc', '-target',
+        '-Xswiftc', 'x86_64-apple-ios'..iPhoneSimulatorSDKVersion..'-simulator'
+    };
+}
+
+-- Javascript/TypeScript
+nvim_lsp.tsserver.setup {
+}
+
+-- HTML
+nvim_lsp.html.setup {
+}
+
+-- Ruby
+nvim_lsp.solargraph.setup {
+    cmd = {
+        'bundle',
+        'exec', 
+        'solargraph',
+        'stdio'
+    };
+}
+
+-- Go
+nvim_lsp.gopls.setup {
+}
+
+-- Python
+nvim_lsp.pyright.setup {
+}
+
+-- Debug
+--vim.lsp.set_log_level("debug")
+
+---------------------------------------
+--  Configure
+---------------------------------------
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.ruler = true
