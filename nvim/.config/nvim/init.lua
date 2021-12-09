@@ -15,9 +15,6 @@ require('packer').startup(function()
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- Themes
-    use { 'arcticicestudio/nord-vim' }
-
     -- Files
     use { 'junegunn/fzf', run = ':call fzf#install()' }
     use 'junegunn/fzf.vim'
