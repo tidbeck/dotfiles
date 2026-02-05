@@ -1,12 +1,8 @@
-# If you come from bash you might have to change your $PATH.
-#export PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
-export PATH=/usr/local/opt/openjdk/bin:$HOME/go/bin:$HOME/development/flutter/bin:$PATH:$HOME/Library/Android/sdk/platform-tools
-
-# C Headers
-#export CPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include
+# Base PATH (machine-specific paths go in ~/.zshrc.local)
+export PATH=$HOME/.local/bin:$HOME/go/bin:$HOME/.npm-packages/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/tidbeck/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -72,7 +68,22 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z zsh-autosuggestions git bundler oc kubectl docker minikube colored-man-pages catimg)
+plugins=(
+    z
+    zsh-autosuggestions
+    emoji
+    fzf
+    git
+    gradle
+    bundler
+    docker
+    minikube
+    colored-man-pages
+    catimg
+    terraform
+    #gcloudcfg
+    zummoner
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,7 +94,9 @@ export HOMEBREW_NO_INSTALL_UPGRADE=1
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -109,4 +122,15 @@ alias vimrc="nvim ~/.config/nvim/init.lua"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-bindkey "ç" fzf-cd-widget
+# bindkey "ç" fzf-cd-widget
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# Starship - shell promt - https://starship.rs
+eval "$(starship init zsh)"
+
+
+# Source local/machine-specific config (not committed to git)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
