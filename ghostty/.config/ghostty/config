@@ -1,0 +1,43 @@
+auto-update = off
+
+shell-integration = zsh
+window-save-state = always
+
+
+theme = Dracula
+font-family = "monaspace"
+mouse-hide-while-typing = true
+
+keybind = shift+enter=text:\x1b\r
+keybind = option+n=new_window
+
+# Tmux pane navigation (Option+hjkl sends Ctrl-b h/j/k/l)
+keybind = option+h=text:\x02h
+keybind = option+j=text:\x02j
+keybind = option+k=text:\x02k
+keybind = option+l=text:\x02l
+keybind = option+f=text:\x02z
+
+keybind = super+r=reload_config
+
+# Unbind Ghostty's default tab switching
+keybind = cmd+digit_1=unbind
+keybind = cmd+digit_2=unbind
+keybind = cmd+digit_3=unbind
+keybind = cmd+digit_4=unbind
+keybind = cmd+digit_5=unbind
+keybind = cmd+digit_6=unbind
+keybind = cmd+digit_7=unbind
+keybind = cmd+digit_8=unbind
+keybind = cmd+digit_9=unbind
+
+# Tmux window switching (Cmd+N sends Ctrl-b N)
+keybind = cmd+one=text:\x021
+keybind = cmd+two=text:\x022
+keybind = cmd+three=text:\x023
+keybind = cmd+four=text:\x024
+keybind = cmd+five=text:\x025
+keybind = cmd+six=text:\x026
+keybind = cmd+seven=text:\x027
+keybind = cmd+eight=text:\x028
+keybind = cmd+nine=text:\x029
