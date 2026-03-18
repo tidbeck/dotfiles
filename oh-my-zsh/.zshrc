@@ -133,4 +133,3 @@ eval "$(starship init zsh)"
 
 # Source local/machine-specific config (not committed to git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
